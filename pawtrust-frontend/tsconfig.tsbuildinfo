@@ -1,0 +1,1 @@
+{"root":["./src/i18n.ts","./src/main.tsx","./src/router.tsx","./src/test-setup.ts","./src/vite-env.d.ts","./src/api/auth.api.ts","./src/api/axiosClient.ts","./src/hooks/useRegister.ts","./src/pages/auth/Register.tsx","./src/store/authStore.ts","./src/types/user.ts"],"version":"5.9.3"}
