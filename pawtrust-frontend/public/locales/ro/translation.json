@@ -1,1 +1,84 @@
-{}
+{
+  "auth": {
+    "login_title": "Conectează-te la contul tău",
+    "email": "Adresă de email",
+    "email_required": "Email-ul este obligatoriu",
+    "email_invalid": "Adresă de email invalidă",
+    "password": "Parolă",
+    "password_required": "Parola este obligatorie",
+    "forgot_password": "Ai uitat parola?",
+    "login": "Conectare",
+    "signing_in": "Se conectează…",
+    "invalid_credentials": "Email sau parolă incorectă.",
+    "rate_limited": "Prea multe încercări de autentificare. Vă rugăm să așteptați un minut.",
+    "no_account": "Nu ai cont?",
+    "register": "Înregistrează-te"
+  },
+  "nav": {
+    "browse_listings": "Anunțuri",
+    "pet_sitters": "Îngrijitori",
+    "dashboard": "Tablou de bord",
+    "profile": "Profil",
+    "logout": "Deconectare",
+    "login": "Autentificare",
+    "register": "Înregistrare"
+  },
+  "common": {
+    "no": "Nu",
+    "yes": "Da"
+  },
+  "buyer": {
+    "dashboard": {
+      "title": "Tabloul meu de bord",
+      "welcome": "Bine ai revenit, {{name}}",
+      "empty_state": "Nu ai nicio cerere. Răsfoiește anunțurile pentru a găsi animalul perfect."
+    },
+    "sidebar": {
+      "inquiries": "Cererile mele",
+      "reviews": "Recenziile mele"
+    }
+  },
+  "breeder": {
+    "dashboard": {
+      "title": "Tabloul crescătorului",
+      "welcome": "Bine ai revenit, {{name}}",
+      "empty_state": "Nu ai niciun anunț. Creează primul tău anunț pentru a începe să primești cereri.",
+      "stats": {
+        "active_listings": "Anunțuri active",
+        "pending_inquiries": "Cereri în așteptare",
+        "verified": "Verificat"
+      }
+    },
+    "sidebar": {
+      "my_listings": "Anunțurile mele",
+      "incoming_inquiries": "Cereri primite",
+      "verification": "Verificare",
+      "documents": "Documente"
+    }
+  },
+  "admin": {
+    "dashboard": {
+      "title": "Panou de administrare",
+      "stats": {
+        "pending_verifications": "Verificări în așteptare",
+        "total_users": "Utilizatori totali",
+        "active_listings": "Anunțuri active"
+      }
+    },
+    "sidebar": {
+      "verification_queue": "Coada de verificare",
+      "users": "Utilizatori",
+      "listings": "Anunțuri"
+    }
+  },
+  "sitter": {
+    "dashboard": {
+      "title": "Tabloul îngrijitorului",
+      "coming_soon": "Această secțiune va fi disponibilă în curând."
+    },
+    "sidebar": {
+      "my_profile": "Profilul meu",
+      "publish_listing": "Publică anunț"
+    }
+  }
+}

@@ -9,6 +9,11 @@ export interface RegisterPayload {
   role: 'buyer' | 'breeder' | 'sitter'
 }
 
+export interface LoginPayload {
+  email: string
+  password: string
+}
+
 export interface AuthResponse {
   data: {
     token: string
@@ -19,3 +24,10 @@ export interface AuthResponse {
 
 export const registerUser = (payload: RegisterPayload) =>
   axiosClient.post<AuthResponse>('/auth/register', payload)
+
+export const loginUser = (payload: LoginPayload) =>
+  axiosClient.post<AuthResponse>('/auth/login', payload)
+
+export const logoutUser = () => axiosClient.post('/auth/logout')
+
+export const getMe = () => axiosClient.get<{ data: User }>('/auth/me')

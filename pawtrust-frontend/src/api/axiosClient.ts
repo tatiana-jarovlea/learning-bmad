@@ -21,8 +21,12 @@ axiosClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      useAuthStore.getState().clearAuth()
-      window.location.href = '/login'
+      // Do not redirect on login endpoint itself (avoids infinite loop)
+      const url: string = error.config?.url ?? ''
+      if (!url.includes('/auth/login')) {
+        useAuthStore.getState().clearAuth()
+        window.location.href = '/login'
+      }
     }
     return Promise.reject(error)
   }

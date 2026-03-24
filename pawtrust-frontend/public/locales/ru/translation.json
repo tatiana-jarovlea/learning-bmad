@@ -1,1 +1,84 @@
-{}
+{
+  "auth": {
+    "login_title": "Войти в аккаунт",
+    "email": "Электронная почта",
+    "email_required": "Email обязателен",
+    "email_invalid": "Неверный адрес email",
+    "password": "Пароль",
+    "password_required": "Пароль обязателен",
+    "forgot_password": "Забыли пароль?",
+    "login": "Войти",
+    "signing_in": "Вход…",
+    "invalid_credentials": "Неверный email или пароль.",
+    "rate_limited": "Слишком много попыток входа. Пожалуйста, подождите минуту.",
+    "no_account": "Нет аккаунта?",
+    "register": "Зарегистрироваться"
+  },
+  "nav": {
+    "browse_listings": "Объявления",
+    "pet_sitters": "Няни для питомцев",
+    "dashboard": "Панель управления",
+    "profile": "Профиль",
+    "logout": "Выйти",
+    "login": "Войти",
+    "register": "Регистрация"
+  },
+  "common": {
+    "no": "Нет",
+    "yes": "Да"
+  },
+  "buyer": {
+    "dashboard": {
+      "title": "Моя панель",
+      "welcome": "Добро пожаловать, {{name}}",
+      "empty_state": "Заявок пока нет. Просмотрите объявления, чтобы найти идеального питомца."
+    },
+    "sidebar": {
+      "inquiries": "Мои заявки",
+      "reviews": "Мои отзывы"
+    }
+  },
+  "breeder": {
+    "dashboard": {
+      "title": "Панель заводчика",
+      "welcome": "Добро пожаловать, {{name}}",
+      "empty_state": "Объявлений пока нет. Создайте первое объявление, чтобы начать получать заявки.",
+      "stats": {
+        "active_listings": "Активные объявления",
+        "pending_inquiries": "Ожидающие заявки",
+        "verified": "Верифицирован"
+      }
+    },
+    "sidebar": {
+      "my_listings": "Мои объявления",
+      "incoming_inquiries": "Входящие заявки",
+      "verification": "Верификация",
+      "documents": "Документы"
+    }
+  },
+  "admin": {
+    "dashboard": {
+      "title": "Панель администратора",
+      "stats": {
+        "pending_verifications": "Ожидают верификации",
+        "total_users": "Всего пользователей",
+        "active_listings": "Активных объявлений"
+      }
+    },
+    "sidebar": {
+      "verification_queue": "Очередь верификации",
+      "users": "Пользователи",
+      "listings": "Объявления"
+    }
+  },
+  "sitter": {
+    "dashboard": {
+      "title": "Панель ухаживающего",
+      "coming_soon": "Этот раздел скоро будет доступен."
+    },
+    "sidebar": {
+      "my_profile": "Мой профиль",
+      "publish_listing": "Опубликовать объявление"
+    }
+  }
+}

@@ -10,11 +10,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "aws/aws-sdk-php": "^3.0",
-        "league/flysystem-aws-s3-v3": "^3.0",
+        "aws/aws-sdk-php": "^3.373",
         "laravel/framework": "^13.0",
         "laravel/sanctum": "^4.3",
         "laravel/tinker": "^3.0",
+        "league/flysystem-aws-s3-v3": "^3.32",
         "spatie/laravel-permission": "^7.2"
     },
     "require-dev": {
