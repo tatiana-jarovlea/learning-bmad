@@ -91,3 +91,27 @@ export const uploadBreederDocument = (
 
 export const deleteBreederDocument = (breederId: number, docId: number) =>
   axiosClient.delete(`/breeders/${breederId}/documents/${docId}`)
+
+export type VerificationStatus =
+  | 'not_submitted'
+  | 'pending'
+  | 'under_review'
+  | 'verified'
+  | 'rejected'
+
+export interface VerificationStatusResponse {
+  status: VerificationStatus
+  admin_notes: string | null
+  submitted_at: string | null
+  reviewed_at: string | null
+}
+
+export interface SubmitVerificationPayload {
+  document_ids: number[]
+}
+
+export const getVerificationStatus = () =>
+  axiosClient.get<{ data: VerificationStatusResponse }>('/verification-requests/status')
+
+export const submitVerificationRequest = (payload: SubmitVerificationPayload) =>
+  axiosClient.post<{ data: VerificationStatusResponse }>('/verification-requests', payload)

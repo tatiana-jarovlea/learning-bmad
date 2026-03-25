@@ -35,6 +35,11 @@ class Listing extends Model
         return $this->hasMany(ListingPhoto::class)->orderBy('sort_order');
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function scopeActive(Builder $query): void
     {
         $query->where('status', 'active');

@@ -9,6 +9,7 @@ use App\Http\Resources\ListingCardResource;
 use App\Http\Resources\ListingResource;
 use App\Http\Resources\ListingSummaryResource;
 use App\Models\Listing;
+use App\Models\Review;
 use App\Services\ListingService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -42,9 +43,29 @@ class ListingController extends Controller
 
     public function show(int $id): JsonResponse
     {
-        $listing = $this->listingService->getListingWithPhotos($id);
+        $listing = Listing::with([
+            'photos',
+            'breederProfile',
+            'breederProfile.achievements' => fn ($q) => $q->latest()->limit(3),
+            'reviews'                     => fn ($q) => $q->published()->with('buyer')->latest()->limit(5),
+        ])
+        ->where('status', 'active')
+        ->findOrFail($id);
 
-        return response()->json(['data' => new ListingResource($listing)]);
+        $reviewSummary = Review::where('listing_id', $listing->id)
+            ->published()
+            ->selectRaw('AVG(rating) as average, COUNT(*) as total')
+            ->first();
+
+        return response()->json([
+            'data' => ListingResource::make($listing)
+                ->additional([
+                    'review_summary' => [
+                        'average_rating' => $reviewSummary?->average ? round((float) $reviewSummary->average, 1) : null,
+                        'total_count'    => (int) ($reviewSummary?->total ?? 0),
+                    ],
+                ]),
+        ]);
     }
 
     public function update(Request $request, Listing $listing): JsonResponse

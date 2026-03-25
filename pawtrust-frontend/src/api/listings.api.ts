@@ -7,6 +7,7 @@ export interface ListingPhoto {
   url: string
 }
 
+// Extend BreederSummary with detail fields
 export interface BreederSummary {
   id: number
   kennel_name: string | null
@@ -14,6 +15,9 @@ export interface BreederSummary {
   location: string | null
   profile_photo_url: string | null
   verified: boolean
+  verified_at: string | null
+  breed_specialization: string[] | null
+  achievements_count: number
 }
 
 export interface Listing {
@@ -100,6 +104,41 @@ export interface PaginatedListings {
 
 export const searchListings = (params: ListingSearchParams) =>
   axiosClient.get<PaginatedListings>('/listings', { params })
+
+export interface Achievement {
+  id: number
+  title: string
+  federation: string
+  year: number
+}
+
+export interface Review {
+  id: number
+  rating: number
+  comment: string | null
+  buyer_name: string
+  created_at: string
+}
+
+export interface ReviewSummary {
+  average_rating: number | null
+  total_count: number
+}
+
+export interface ListingDetail extends Listing {
+  featured: boolean
+  photos: ListingPhoto[]
+  breeder: BreederSummary
+  achievements: Achievement[]
+  review_summary: ReviewSummary
+  recent_reviews: Review[]
+}
+
+export const getListingDetail = (id: number) =>
+  axiosClient.get<{ data: ListingDetail }>(`/listings/${id}`)
+
+export const getListingReviews = (listingId: number, page = 1) =>
+  axiosClient.get<PaginatedListings>(`/listings/${listingId}/reviews`, { params: { page } })
 
 export const uploadListingPhoto = (
   listingId: number,

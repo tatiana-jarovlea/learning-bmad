@@ -4,11 +4,17 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { useAuthStore } from '@/store/authStore'
-import { getMyBreederProfile, type BreederDocument } from '@/api/breeders.api'
+import {
+  getMyBreederProfile,
+  getVerificationStatus,
+  type BreederDocument,
+} from '@/api/breeders.api'
 import { getMyListings, type Listing } from '@/api/listings.api'
 import { BreederProfileForm } from '@/components/breeders/BreederProfileForm'
 import { DocumentUpload } from '@/components/breeders/DocumentUpload'
 import { DocumentList } from '@/components/breeders/DocumentList'
+import VerificationStatusCard from '@/components/breeders/VerificationStatusCard'
+import VerificationSubmitModal from '@/components/breeders/VerificationSubmitModal'
 
 const STATUS_BADGE: Record<Listing['status'], string> = {
   draft: 'bg-gray-100 text-gray-600',
@@ -31,7 +37,8 @@ export default function BreederDashboard() {
   const user = useAuthStore((s) => s.user)
   const queryClient = useQueryClient()
   const [showProfileForm, setShowProfileForm] = useState(false)
-  const [activeTab, setActiveTab] = useState<'listings' | 'documents'>('listings')
+  const [activeTab, setActiveTab] = useState<'listings' | 'documents' | 'verification'>('listings')
+  const [showVerificationModal, setShowVerificationModal] = useState(false)
 
   const { data: profileData } = useQuery({
     queryKey: ['myBreederProfile'],
@@ -42,6 +49,12 @@ export default function BreederDashboard() {
   const { data: listings } = useQuery({
     queryKey: ['myListings'],
     queryFn: () => getMyListings().then((r) => r.data.data),
+    retry: false,
+  })
+
+  const { data: verificationStatus } = useQuery({
+    queryKey: ['verificationStatus'],
+    queryFn: () => getVerificationStatus().then((r) => r.data.data),
     retry: false,
   })
 
@@ -111,7 +124,7 @@ export default function BreederDashboard() {
 
         {/* Tabs */}
         <div className="flex border-b border-gray-200 mb-6">
-          {(['listings', 'documents'] as const).map((tab) => (
+          {(['listings', 'documents', 'verification'] as const).map((tab) => (
             <button
               key={tab}
               type="button"
@@ -122,7 +135,10 @@ export default function BreederDashboard() {
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
-              {t(`breeder.dashboard.tabs.${tab}`, tab === 'listings' ? 'Listings' : 'Documents')}
+              {t(
+                `breeder.dashboard.tabs.${tab}`,
+                tab === 'listings' ? 'Listings' : tab === 'documents' ? 'Documents' : 'Verification'
+              )}
             </button>
           ))}
         </div>
@@ -235,6 +251,34 @@ export default function BreederDashboard() {
                 </div>
               )}
           </div>
+        )}
+        {/* Verification tab */}
+        {activeTab === 'verification' && (
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              {t('breeder.dashboard.tabs.verification', 'Verification')}
+            </h2>
+            {verificationStatus ? (
+              <VerificationStatusCard
+                status={verificationStatus}
+                onSubmitClick={() => setShowVerificationModal(true)}
+              />
+            ) : (
+              <div className="h-16 bg-gray-100 rounded-lg animate-pulse" />
+            )}
+          </div>
+        )}
+
+        {showVerificationModal && profileData && (
+          <VerificationSubmitModal
+            breederId={profileData.id}
+            documents={profileData.documents ?? []}
+            onSubmitted={() => {
+              queryClient.invalidateQueries({ queryKey: ['verificationStatus'] })
+              queryClient.invalidateQueries({ queryKey: ['myBreederProfile'] })
+            }}
+            onClose={() => setShowVerificationModal(false)}
+          />
         )}
       </div>
     </DashboardLayout>

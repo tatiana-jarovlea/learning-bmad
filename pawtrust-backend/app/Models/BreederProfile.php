@@ -37,6 +37,16 @@ class BreederProfile extends Model
         return $this->hasMany(BreederDocument::class);
     }
 
+    public function achievements(): HasMany
+    {
+        return $this->hasMany(BreederAchievement::class);
+    }
+
+    public function verificationRequests(): HasMany
+    {
+        return $this->hasMany(VerificationRequest::class);
+    }
+
     public function isVerified(): bool
     {
         return $this->verified_at !== null;

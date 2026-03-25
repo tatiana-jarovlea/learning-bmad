@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\V1\BreederProfileController;
 use App\Http\Controllers\Api\V1\HealthCertificateController;
 use App\Http\Controllers\Api\V1\ListingController;
 use App\Http\Controllers\Api\V1\ListingPhotoController;
+use App\Http\Controllers\Api\V1\ReviewController;
+use App\Http\Controllers\Api\V1\VerificationRequestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,8 +35,9 @@ Route::prefix('v1')->group(function () {
     Route::get('/breeds',        [BreedController::class, 'index']);
 
     // Public listing routes
-    Route::get('/listings',           [ListingController::class, 'index']);
-    Route::get('/listings/{listing}', [ListingController::class, 'show']);
+    Route::get('/listings',               [ListingController::class, 'index']);
+    Route::get('/listings/{id}',          [ListingController::class, 'show']);
+    Route::get('/listings/{id}/reviews',  [ReviewController::class, 'index']);
 
     // Authenticated breeder routes
     Route::middleware(['auth:sanctum', 'role:breeder'])->group(function () {
@@ -55,6 +58,10 @@ Route::prefix('v1')->group(function () {
         // Breeder documents
         Route::post('/breeders/{breederId}/documents',              [BreederDocumentController::class, 'store']);
         Route::delete('/breeders/{breederId}/documents/{docId}',   [BreederDocumentController::class, 'destroy']);
+
+        // Verification requests
+        Route::post('/verification-requests',        [VerificationRequestController::class, 'store']);
+        Route::get('/verification-requests/status',  [VerificationRequestController::class, 'status']);
     });
 
     // Admin: document pre-signed URL access
