@@ -17,6 +17,8 @@ import AdminUsers from '@/pages/stubs/AdminUsers'
 import AdminListings from '@/pages/stubs/AdminListings'
 import ProfilePage from '@/pages/stubs/ProfilePage'
 import BreederProfilePage from '@/pages/BreederProfile'
+import CreateListingPage from '@/pages/breeder/CreateListingPage'
+import SearchPage from '@/pages/Search'
 import { ProtectedRoute, AdminRoute } from '@/components/common/ProtectedRoute'
 import { useAuthStore } from '@/store/authStore'
 
@@ -39,9 +41,10 @@ function RedirectIfAuth({ element }: { element: React.ReactNode }) {
 const router = createBrowserRouter([
   // Public routes
   { path: '/', element: <div>PawTrust Home</div> },
-  { path: '/search', element: <div>Search — coming soon</div> },
+  { path: '/search', element: <SearchPage /> },
   { path: '/sitters', element: <div>Pet Sitters — coming soon</div> },
   { path: '/breeders/:id', element: <BreederProfilePage /> },
+  { path: '/listings/:id', element: <div>Listing Detail — coming soon</div> },
   { path: '/register', element: <RedirectIfAuth element={<RegisterPage />} /> },
   { path: '/login', element: <RedirectIfAuth element={<LoginPage />} /> },
   { path: '/forgot-password', element: <ForgotPasswordPage /> },
@@ -62,6 +65,8 @@ const router = createBrowserRouter([
       { path: '/breeder/inquiries', element: <BreederInquiries /> },
       { path: '/breeder/verification', element: <BreederVerification /> },
       { path: '/breeder/documents', element: <BreederDocuments /> },
+      { path: '/breeder/listings/new', element: <CreateListingPage /> },
+      { path: '/breeder/listings/:id/edit', element: <div>Edit Listing — coming soon</div> },
     ],
   },
 

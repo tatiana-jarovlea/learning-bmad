@@ -84,6 +84,9 @@ return [
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
+    // Dev only — bypass Stripe for listing activation. Must be false in staging/production.
+    'skip_listing_payment' => env('SKIP_LISTING_PAYMENT', false),
+
     /*
     |--------------------------------------------------------------------------
     | Encryption Key

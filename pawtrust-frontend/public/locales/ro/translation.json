@@ -25,7 +25,10 @@
   },
   "common": {
     "no": "Nu",
-    "yes": "Da"
+    "yes": "Da",
+    "back": "Înapoi",
+    "prev": "Înapoi",
+    "next": "Înainte"
   },
   "buyer": {
     "dashboard": {
@@ -47,13 +50,28 @@
         "active_listings": "Anunțuri active",
         "pending_inquiries": "Cereri în așteptare",
         "verified": "Verificat"
-      }
+      },
+      "tabs": {
+        "listings": "Anunțuri",
+        "documents": "Documente"
+      },
+      "my_listings": "Anunțurile mele",
+      "create_listing": "Adaugă anunț",
+      "no_listings": "Niciun anunț încă.",
+      "create_first": "Creează primul tău anunț →",
+      "ready_to_verify": "Gata pentru verificare? Trimite profilul tău spre review →"
     },
     "sidebar": {
       "my_listings": "Anunțurile mele",
       "incoming_inquiries": "Cereri primite",
       "verification": "Verificare",
       "documents": "Documente"
+    },
+    "profile": {
+      "years_active": "{{n}} ani de activitate",
+      "unnamed": "Crescătorie fără nume",
+      "documents_on_file": "{{count}} document(e) de verificare disponibil(e)",
+      "no_documents": "Niciun document de verificare"
     }
   },
   "admin": {
@@ -80,5 +98,49 @@
       "my_profile": "Profilul meu",
       "publish_listing": "Publică anunț"
     }
+  },
+  "search": {
+    "title": "Caută animale",
+    "results_count": "{{count}} anunțuri găsite",
+    "empty_state": "Niciun anunț nu corespunde criteriilor.",
+    "clear_filters": "Șterge filtrele",
+    "filters": {
+      "keyword": "Caută...",
+      "species": "Specie",
+      "species_all": "Toate",
+      "species_dog": "Câine",
+      "species_cat": "Pisică",
+      "price_min": "Preț minim",
+      "price_max": "Preț maxim",
+      "location_city": "Oraș",
+      "verified_only": "Doar crescători verificați"
+    }
+  },
+  "listing_card": {
+    "featured": "Recomandat",
+    "verified": "Verificat"
+  },
+  "documents": {
+    "types": {
+      "kennel_cert": "Certificat crescătorie",
+      "fci_papers": "Acte FCI",
+      "achr_papers": "Acte AChR",
+      "vaccination_records": "Fișă vaccinuri",
+      "health_tests": "Teste sănătate",
+      "other": "Alt document"
+    },
+    "status": {
+      "pending": "În așteptare",
+      "approved": "Aprobat",
+      "rejected": "Respins"
+    },
+    "empty_state": "Niciun document încărcat.",
+    "upload_cta": "Încarcă document",
+    "select_type": "Tipul documentului",
+    "choose_file": "Alege fișier",
+    "uploading": "Se încarcă…",
+    "error_too_large": "Fișierul depășește limita de 10 MB.",
+    "delete_confirm": "Ești sigur că vrei să ștergi acest document?",
+    "rejected_tooltip": "Acest document a fost respins de administrator. Te rugăm să încarci din nou."
   }
 }

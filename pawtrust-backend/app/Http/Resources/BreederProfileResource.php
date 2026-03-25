@@ -24,6 +24,7 @@ class BreederProfileResource extends JsonResource
             'years_active'         => $this->years_active,
             'verified'             => $this->isVerified(),
             'verified_at'          => $this->verified_at,
+            'documents'            => BreederDocumentResource::collection($this->whenLoaded('documents')),
         ];
     }
 

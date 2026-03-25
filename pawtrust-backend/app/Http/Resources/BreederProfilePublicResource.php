@@ -29,6 +29,12 @@ class BreederProfilePublicResource extends JsonResource
             'listings'             => ListingSummaryResource::collection(
                 $this->whenLoaded('listings')
             ),
+            // Count of approved docs only — no filenames or types exposed to public
+            'documents_on_file'    => $this->whenLoaded(
+                'documents',
+                fn () => $this->documents->count(),
+                0
+            ),
             // NEVER include: phone, email, user_id (internal), verified_by
         ];
     }

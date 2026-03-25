@@ -92,6 +92,24 @@ export default function BreederProfilePage() {
                 {t('breeder.profile.years_active', '{{n}} years active', { n: data.years_active })}
               </p>
             )}
+            {typeof data.documents_on_file === 'number' ? (
+              data.documents_on_file > 0 ? (
+                <p className="text-green-600 text-sm mt-1">
+                  ✓{' '}
+                  {t(
+                    'breeder.profile.documents_on_file',
+                    '{{count}} verification document(s) on file',
+                    {
+                      count: data.documents_on_file,
+                    }
+                  )}
+                </p>
+              ) : (
+                <p className="text-gray-400 text-sm mt-1">
+                  {t('breeder.profile.no_documents', 'No verification documents yet')}
+                </p>
+              )
+            ) : null}
             {data.website && (
               <a
                 href={data.website}

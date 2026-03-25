@@ -2,7 +2,11 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BreedController;
+use App\Http\Controllers\Api\V1\BreederDocumentController;
 use App\Http\Controllers\Api\V1\BreederProfileController;
+use App\Http\Controllers\Api\V1\HealthCertificateController;
+use App\Http\Controllers\Api\V1\ListingController;
+use App\Http\Controllers\Api\V1\ListingPhotoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,11 +32,33 @@ Route::prefix('v1')->group(function () {
     Route::get('/breeders/{id}', [BreederProfileController::class, 'show']);
     Route::get('/breeds',        [BreedController::class, 'index']);
 
+    // Public listing routes
+    Route::get('/listings',           [ListingController::class, 'index']);
+    Route::get('/listings/{listing}', [ListingController::class, 'show']);
+
     // Authenticated breeder routes
     Route::middleware(['auth:sanctum', 'role:breeder'])->group(function () {
         Route::post('/breeder/profile',       [BreederProfileController::class, 'store']);
         Route::put('/breeder/profile',        [BreederProfileController::class, 'update']);
         Route::get('/breeder/profile',        [BreederProfileController::class, 'myProfile']);
         Route::post('/breeder/profile/photo', [BreederProfileController::class, 'uploadPhoto']);
+
+        // Listings
+        Route::post('/listings',                                    [ListingController::class, 'store']);
+        Route::put('/listings/{listing}',                           [ListingController::class, 'update']);
+        Route::delete('/listings/{listing}',                        [ListingController::class, 'destroy']);
+        Route::get('/breeder/listings',                             [ListingController::class, 'myListings']);
+        Route::post('/listings/{listing}/photos',                   [ListingPhotoController::class, 'store']);
+        Route::delete('/listings/{listing}/photos/{photo}',         [ListingPhotoController::class, 'destroy']);
+        Route::post('/listings/{listing}/health-certificate',       [HealthCertificateController::class, 'store']);
+
+        // Breeder documents
+        Route::post('/breeders/{breederId}/documents',              [BreederDocumentController::class, 'store']);
+        Route::delete('/breeders/{breederId}/documents/{docId}',   [BreederDocumentController::class, 'destroy']);
+    });
+
+    // Admin: document pre-signed URL access
+    Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
+        Route::get('/breeders/{breederId}/documents/{docId}/url',  [BreederDocumentController::class, 'url']);
     });
 });

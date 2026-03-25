@@ -1,10 +1,21 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { Link } from 'react-router-dom'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { useAuthStore } from '@/store/authStore'
-import { getMyBreederProfile } from '@/api/breeders.api'
+import { getMyBreederProfile, type BreederDocument } from '@/api/breeders.api'
+import { getMyListings, type Listing } from '@/api/listings.api'
 import { BreederProfileForm } from '@/components/breeders/BreederProfileForm'
+import { DocumentUpload } from '@/components/breeders/DocumentUpload'
+import { DocumentList } from '@/components/breeders/DocumentList'
+
+const STATUS_BADGE: Record<Listing['status'], string> = {
+  draft: 'bg-gray-100 text-gray-600',
+  active: 'bg-green-100 text-green-700',
+  sold: 'bg-blue-100 text-blue-700',
+  expired: 'bg-orange-100 text-orange-700',
+}
 
 function StatCard({ label, value }: { label: string; value: string | number }) {
   return (
@@ -18,7 +29,9 @@ function StatCard({ label, value }: { label: string; value: string | number }) {
 export default function BreederDashboard() {
   const { t } = useTranslation()
   const user = useAuthStore((s) => s.user)
+  const queryClient = useQueryClient()
   const [showProfileForm, setShowProfileForm] = useState(false)
+  const [activeTab, setActiveTab] = useState<'listings' | 'documents'>('listings')
 
   const { data: profileData } = useQuery({
     queryKey: ['myBreederProfile'],
@@ -26,8 +39,15 @@ export default function BreederDashboard() {
     retry: false,
   })
 
-  const isProfileComplete =
-    user?.profile_complete ?? (profileData?.kennel_name != null && profileData.kennel_name !== '')
+  const { data: listings } = useQuery({
+    queryKey: ['myListings'],
+    queryFn: () => getMyListings().then((r) => r.data.data),
+    retry: false,
+  })
+
+  const activeCount = listings?.filter((l) => l.status === 'active').length ?? 0
+
+  const isProfileComplete = profileData?.kennel_name != null && profileData.kennel_name !== ''
 
   if (showProfileForm) {
     return (
@@ -77,7 +97,7 @@ export default function BreederDashboard() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           <StatCard
             label={t('breeder.dashboard.stats.active_listings', 'Active Listings')}
-            value={0}
+            value={activeCount}
           />
           <StatCard
             label={t('breeder.dashboard.stats.pending_inquiries', 'Pending Inquiries')}
@@ -89,12 +109,133 @@ export default function BreederDashboard() {
           />
         </div>
 
-        <p className="text-gray-600">
-          {t(
-            'breeder.dashboard.empty_state',
-            'No listings yet. Create your first listing to start receiving inquiries.'
-          )}
-        </p>
+        {/* Tabs */}
+        <div className="flex border-b border-gray-200 mb-6">
+          {(['listings', 'documents'] as const).map((tab) => (
+            <button
+              key={tab}
+              type="button"
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 -mb-px text-sm font-medium border-b-2 transition-colors ${
+                activeTab === tab
+                  ? 'border-blue-600 text-blue-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              {t(`breeder.dashboard.tabs.${tab}`, tab === 'listings' ? 'Listings' : 'Documents')}
+            </button>
+          ))}
+        </div>
+
+        {/* Listings tab */}
+        {activeTab === 'listings' && (
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-900">
+                {t('breeder.dashboard.my_listings', 'My Listings')}
+              </h2>
+              <Link
+                to="/breeder/listings/new"
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors"
+              >
+                + {t('breeder.dashboard.create_listing', 'Create Listing')}
+              </Link>
+            </div>
+
+            {!listings || listings.length === 0 ? (
+              <div className="text-center py-10 bg-white rounded-lg border border-gray-200">
+                <p className="text-gray-500 text-sm mb-3">
+                  {t('breeder.dashboard.no_listings', 'No listings yet.')}
+                </p>
+                <Link to="/breeder/listings/new" className="text-blue-600 hover:underline text-sm">
+                  {t('breeder.dashboard.create_first', 'Create your first listing →')}
+                </Link>
+              </div>
+            ) : (
+              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                <table className="w-full text-sm">
+                  <thead className="bg-gray-50 text-gray-500 uppercase tracking-wide text-xs">
+                    <tr>
+                      <th className="px-4 py-3 text-left">{t('listing.fields.title', 'Title')}</th>
+                      <th className="px-4 py-3 text-left">
+                        {t('listing.fields.species_breed', 'Species / Breed')}
+                      </th>
+                      <th className="px-4 py-3 text-left">
+                        {t('listing.fields.status', 'Status')}
+                      </th>
+                      <th className="px-4 py-3 text-left">{t('listing.fields.price', 'Price')}</th>
+                      <th className="px-4 py-3 text-left">
+                        {t('listing.fields.created', 'Created')}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {listings.map((listing) => (
+                      <tr key={listing.id} className="hover:bg-gray-50">
+                        <td className="px-4 py-3 font-medium text-gray-900">{listing.title}</td>
+                        <td className="px-4 py-3 text-gray-600 capitalize">
+                          {listing.species} / {listing.breed}
+                        </td>
+                        <td className="px-4 py-3">
+                          <span
+                            className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_BADGE[listing.status]}`}
+                          >
+                            {listing.status}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-gray-600">
+                          {listing.price} {listing.currency}
+                        </td>
+                        <td className="px-4 py-3 text-gray-400">
+                          {new Date(listing.created_at).toLocaleDateString()}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Documents tab */}
+        {activeTab === 'documents' && profileData && (
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              {t('breeder.dashboard.tabs.documents', 'Documents')}
+            </h2>
+
+            <div className="mb-6">
+              <DocumentList breederId={profileData.id} documents={profileData.documents ?? []} />
+            </div>
+
+            <div className="bg-white rounded-lg border border-gray-200 p-4">
+              <h3 className="text-sm font-semibold text-gray-700 mb-3">
+                {t('documents.upload_cta', 'Upload Document')}
+              </h3>
+              <DocumentUpload
+                breederId={profileData.id}
+                onUploaded={(doc: BreederDocument) => {
+                  queryClient.setQueryData(
+                    ['myBreederProfile'],
+                    (old: typeof profileData | undefined) =>
+                      old ? { ...old, documents: [...(old.documents ?? []), doc] } : old
+                  )
+                }}
+              />
+            </div>
+
+            {(profileData.documents ?? []).length > 0 &&
+              !(profileData.documents ?? []).some((d) => d.status === 'rejected') && (
+                <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md text-sm text-green-700">
+                  {t(
+                    'breeder.dashboard.ready_to_verify',
+                    'Ready to verify? Submit your profile for review →'
+                  )}
+                </div>
+              )}
+          </div>
+        )}
       </div>
     </DashboardLayout>
   )

@@ -25,7 +25,10 @@
   },
   "common": {
     "no": "Нет",
-    "yes": "Да"
+    "yes": "Да",
+    "back": "Назад",
+    "prev": "Назад",
+    "next": "Далее"
   },
   "buyer": {
     "dashboard": {
@@ -47,13 +50,28 @@
         "active_listings": "Активные объявления",
         "pending_inquiries": "Ожидающие заявки",
         "verified": "Верифицирован"
-      }
+      },
+      "tabs": {
+        "listings": "Объявления",
+        "documents": "Документы"
+      },
+      "my_listings": "Мои объявления",
+      "create_listing": "Добавить объявление",
+      "no_listings": "Объявлений пока нет.",
+      "create_first": "Создать первое объявление →",
+      "ready_to_verify": "Готовы к верификации? Отправьте профиль на проверку →"
     },
     "sidebar": {
       "my_listings": "Мои объявления",
       "incoming_inquiries": "Входящие заявки",
       "verification": "Верификация",
       "documents": "Документы"
+    },
+    "profile": {
+      "years_active": "{{n}} лет опыта",
+      "unnamed": "Питомник без названия",
+      "documents_on_file": "{{count}} проверочный документ(ов) загружено",
+      "no_documents": "Документы для проверки отсутствуют"
     }
   },
   "admin": {
@@ -80,5 +98,49 @@
       "my_profile": "Мой профиль",
       "publish_listing": "Опубликовать объявление"
     }
+  },
+  "documents": {
+    "types": {
+      "kennel_cert": "Свидетельство питомника",
+      "fci_papers": "Документы FCI",
+      "achr_papers": "Документы AChR",
+      "vaccination_records": "Паспорт прививок",
+      "health_tests": "Тесты здоровья",
+      "other": "Другой документ"
+    },
+    "status": {
+      "pending": "На рассмотрении",
+      "approved": "Одобрен",
+      "rejected": "Отклонён"
+    },
+    "empty_state": "Документы не загружены.",
+    "upload_cta": "Загрузить документ",
+    "select_type": "Тип документа",
+    "choose_file": "Выбрать файл",
+    "uploading": "Загружается…",
+    "error_too_large": "Файл превышает лимит 10 МБ.",
+    "delete_confirm": "Вы уверены, что хотите удалить этот документ?",
+    "rejected_tooltip": "Этот документ был отклонён администратором. Пожалуйста, загрузите снова."
+  },
+  "search": {
+    "title": "Поиск животных",
+    "results_count": "Найдено {{count}} объявлений",
+    "empty_state": "Объявлений по вашему запросу не найдено.",
+    "clear_filters": "Сбросить фильтры",
+    "filters": {
+      "keyword": "Поиск...",
+      "species": "Вид",
+      "species_all": "Все",
+      "species_dog": "Собака",
+      "species_cat": "Кошка",
+      "price_min": "Мин. цена",
+      "price_max": "Макс. цена",
+      "location_city": "Город",
+      "verified_only": "Только верифицированные"
+    }
+  },
+  "listing_card": {
+    "featured": "Рекомендуем",
+    "verified": "Верифицирован"
   }
 }

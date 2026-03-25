@@ -18,11 +18,31 @@ export interface BreederProfile {
   verified: boolean
   verified_at: string | null
   listings: ListingSummary[]
+  documents_on_file?: number
 }
 
 export interface BreederProfilePrivate extends BreederProfile {
   phone: string | null
   user_id: number
+  documents?: BreederDocument[]
+}
+
+export type DocumentType =
+  | 'kennel_cert'
+  | 'fci_papers'
+  | 'achr_papers'
+  | 'vaccination_records'
+  | 'health_tests'
+  | 'other'
+
+export type DocumentStatus = 'pending' | 'approved' | 'rejected'
+
+export interface BreederDocument {
+  id: number
+  document_type: DocumentType
+  filename: string
+  uploaded_at: string
+  status: DocumentStatus
 }
 
 export interface BreederProfilePayload {
@@ -55,3 +75,19 @@ export const uploadBreederProfilePhoto = (file: File) => {
     headers: { 'Content-Type': 'multipart/form-data' },
   })
 }
+
+export const uploadBreederDocument = (
+  breederId: number,
+  file: File,
+  documentType: DocumentType
+) => {
+  const form = new FormData()
+  form.append('file', file)
+  form.append('document_type', documentType)
+  return axiosClient.post<{ data: BreederDocument }>(`/breeders/${breederId}/documents`, form, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
+}
+
+export const deleteBreederDocument = (breederId: number, docId: number) =>
+  axiosClient.delete(`/breeders/${breederId}/documents/${docId}`)

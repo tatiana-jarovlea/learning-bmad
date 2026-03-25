@@ -55,12 +55,16 @@ class BreederProfileController extends Controller
             return response()->json(['message' => 'Profile not found.'], 404);
         }
 
+        $profile->load(['documents' => fn ($q) => $q->whereNull('deleted_at')]);
+
         return response()->json(['data' => new BreederProfileResource($profile)]);
     }
 
     public function show(int $id): JsonResponse
     {
         $profile = BreederProfile::where('user_id', $id)->firstOrFail();
+
+        $profile->load(['documents' => fn ($q) => $q->whereNull('deleted_at')->where('status', 'approved')]);
 
         return response()->json(['data' => new BreederProfilePublicResource($profile)]);
     }
