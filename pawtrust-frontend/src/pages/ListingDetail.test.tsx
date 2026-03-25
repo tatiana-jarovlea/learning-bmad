@@ -120,7 +120,7 @@ describe('ListingDetailPage', () => {
 
     renderDetail()
 
-    await waitFor(() => expect(screen.getByText('Log in to Submit an Inquiry')).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText('Log in to Contact Breeder')).toBeInTheDocument())
   })
 
   it('shows buyer Submit Inquiry CTA when authenticated as buyer', async () => {
@@ -209,7 +209,7 @@ describe('ListingDetailPage', () => {
 
     renderDetail('42')
 
-    await waitFor(() => expect(screen.getByText('Log in to Submit an Inquiry')).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText('Log in to Contact Breeder')).toBeInTheDocument())
     // Verify button exists and is clickable (navigation tested separately)
     expect(screen.getByRole('button', { name: /log in/i })).toBeInTheDocument()
   })

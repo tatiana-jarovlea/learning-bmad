@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import type { BreederSummary } from '@/api/listings.api'
+import { VerifiedBadge } from '@/components/shared/VerifiedBadge'
 
 interface Props {
   breeder: BreederSummary
@@ -25,11 +26,9 @@ export function BreederSummaryCard({ breeder }: Props) {
         )}
         <div className="min-w-0">
           <p className="font-semibold text-gray-900 truncate">{displayName}</p>
-          {breeder.verified && (
-            <span className="inline-flex items-center gap-1 text-xs text-green-700 font-medium">
-              ✓ Verified
-            </span>
-          )}
+          <div className="mt-1">
+            <VerifiedBadge verified={breeder.verified} size="sm" />
+          </div>
         </div>
       </div>
 

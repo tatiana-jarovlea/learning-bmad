@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { ListingCard as ListingCardType } from '@/api/listings.api'
+import { VerifiedBadge } from '@/components/shared/VerifiedBadge'
 
 interface Props {
   listing: ListingCardType
@@ -44,11 +45,6 @@ export function ListingCard({ listing }: Props) {
               {t('listing_card.featured', 'Featured')}
             </span>
           )}
-          {listing.verified && (
-            <span className="px-2 py-0.5 bg-green-600 text-white text-xs font-semibold rounded-full">
-              ✓ {t('listing_card.verified', 'Verified')}
-            </span>
-          )}
         </div>
       </div>
 
@@ -69,6 +65,9 @@ export function ListingCard({ listing }: Props) {
         {listing.breeder_name && (
           <p className="text-xs text-gray-400 mt-1 truncate">{listing.breeder_name}</p>
         )}
+        <div className="mt-1.5">
+          <VerifiedBadge verified={listing.verified} size="sm" />
+        </div>
       </div>
     </Link>
   )

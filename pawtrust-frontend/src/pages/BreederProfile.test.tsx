@@ -74,7 +74,9 @@ describe('BreederProfilePage', () => {
     )
     renderPage()
     await waitFor(() => {
-      expect(screen.getByText(/verified by pawtrust/i)).toBeInTheDocument()
+      const badge = screen.getByRole('status')
+      expect(badge).toBeInTheDocument()
+      expect(badge).toHaveAttribute('title', expect.stringMatching(/verified by pawtrust/i))
     })
   })
 

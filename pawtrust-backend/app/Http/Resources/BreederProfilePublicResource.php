@@ -26,6 +26,7 @@ class BreederProfilePublicResource extends JsonResource
             'years_active'         => $this->years_active,
             'verified'             => $this->isVerified(),
             'verified_at'          => $this->verified_at,
+            'verified_since'       => $this->verified_at?->toDateString(),
             'listings'             => ListingSummaryResource::collection(
                 $this->whenLoaded('listings')
             ),

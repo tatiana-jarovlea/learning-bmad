@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Admin\AdminVerificationController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BreedController;
 use App\Http\Controllers\Api\V1\BreederDocumentController;
 use App\Http\Controllers\Api\V1\BreederProfileController;
 use App\Http\Controllers\Api\V1\HealthCertificateController;
+use App\Http\Controllers\Api\V1\InquiryController;
 use App\Http\Controllers\Api\V1\ListingController;
 use App\Http\Controllers\Api\V1\ListingPhotoController;
 use App\Http\Controllers\Api\V1\ReviewController;
@@ -39,6 +41,10 @@ Route::prefix('v1')->group(function () {
     Route::get('/listings/{id}',          [ListingController::class, 'show']);
     Route::get('/listings/{id}/reviews',  [ReviewController::class, 'index']);
 
+    // Buyer inquiry route
+    Route::post('/listings/{listing}/inquire', [InquiryController::class, 'store'])
+        ->middleware(['auth:sanctum', 'role:buyer']);
+
     // Authenticated breeder routes
     Route::middleware(['auth:sanctum', 'role:breeder'])->group(function () {
         Route::post('/breeder/profile',       [BreederProfileController::class, 'store']);
@@ -67,5 +73,11 @@ Route::prefix('v1')->group(function () {
     // Admin: document pre-signed URL access
     Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
         Route::get('/breeders/{breederId}/documents/{docId}/url',  [BreederDocumentController::class, 'url']);
+
+        Route::prefix('admin')->group(function () {
+            Route::get('/verification-requests',                                      [AdminVerificationController::class, 'index']);
+            Route::put('/verification-requests/{verificationRequest}/review',         [AdminVerificationController::class, 'review']);
+            Route::get('/documents/{document}/preview',                               [AdminVerificationController::class, 'documentPreview']);
+        });
     });
 });

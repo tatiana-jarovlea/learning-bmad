@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -41,5 +42,10 @@ class User extends Authenticatable
     public function breederProfile(): HasOne
     {
         return $this->hasOne(BreederProfile::class);
+    }
+
+    public function inquiries(): HasMany
+    {
+        return $this->hasMany(Inquiry::class, 'buyer_id');
     }
 }

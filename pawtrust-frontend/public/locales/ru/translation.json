@@ -87,6 +87,28 @@
       "verification_queue": "Очередь верификации",
       "users": "Пользователи",
       "listings": "Объявления"
+    },
+    "verification": {
+      "title": "Очередь верификации",
+      "filter_all": "Все",
+      "filter_pending": "Ожидают",
+      "filter_under_review": "На рассмотрении",
+      "filter_approved": "Одобренные",
+      "filter_rejected": "Отклонённые",
+      "col_breeder": "Заводчик",
+      "col_kennel": "Питомник",
+      "col_submitted": "Дата подачи",
+      "col_documents": "Документы",
+      "col_status": "Статус",
+      "btn_review": "Рассмотреть",
+      "btn_preview": "Просмотр",
+      "modal_title": "Решение по верификации",
+      "status_under_review": "Поставить на рассмотрение",
+      "status_approve": "Одобрить",
+      "status_reject": "Отклонить",
+      "notes_label": "Заметка для заводчика (минимум 20 символов):",
+      "btn_save": "Сохранить решение",
+      "toast_success": "Решение сохранено."
     }
   },
   "sitter": {
@@ -121,6 +143,13 @@
     "error_too_large": "Файл превышает лимит 10 МБ.",
     "delete_confirm": "Вы уверены, что хотите удалить этот документ?",
     "rejected_tooltip": "Этот документ был отклонён администратором. Пожалуйста, загрузите снова."
+  },
+  "badge": {
+    "verified_label": "Подтверждён",
+    "unverified_label": "Не подтверждён",
+    "verified_tooltip": "Этот заводчик прошёл верификацию от PawTrust",
+    "unverified_tooltip": "Этот заводчик ещё не верифицирован",
+    "verified_only_toggle": "Только верифицированные заводчики"
   },
   "search": {
     "title": "Поиск животных",
@@ -192,5 +221,20 @@
     "modal_no_docs": "Нет загруженных документов. Загрузите документы сначала.",
     "modal_submit": "Отправить",
     "admin_notes_label": "Заметки администратора:"
+  },
+  "inquiry": {
+    "btn_contact_breeder": "Связаться с заводчиком",
+    "btn_login_to_contact": "Войдите, чтобы связаться",
+    "modal_title": "Отправить запрос",
+    "message_label": "Необязательное сообщение (макс. 500 символов)",
+    "message_placeholder": "Расскажите заводчику о себе…",
+    "btn_send": "Отправить запрос",
+    "sending": "Отправка…",
+    "chars_remaining": "символов осталось",
+    "already_inquired": "Вы уже отправляли запрос по этому объявлению.",
+    "contact_reveal_title": "Контактные данные заводчика",
+    "contact_email": "Email",
+    "contact_phone": "Телефон",
+    "contact_name": "Имя"
   }
 }

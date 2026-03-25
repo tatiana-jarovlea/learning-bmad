@@ -144,7 +144,7 @@ export default function ListingDetailPage() {
           {/* Sidebar */}
           <aside className="w-full lg:w-72 shrink-0 space-y-4">
             <BreederSummaryCard breeder={data.breeder} />
-            <InquiryCTA listingId={data.id} />
+            <InquiryCTA listingId={data.id} listingTitle={data.title} />
           </aside>
         </div>
       </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Exceptions\DuplicateInquiryException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -23,5 +24,9 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->expectsJson()) {
                 return response()->json(['message' => 'Invalid credentials.'], 401);
             }
+        });
+
+        $exceptions->renderable(function (DuplicateInquiryException $e) {
+            return response()->json(['message' => $e->getMessage()], 409);
         });
     })->create();

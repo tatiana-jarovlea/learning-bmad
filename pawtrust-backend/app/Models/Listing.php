@@ -40,6 +40,11 @@ class Listing extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function inquiries(): HasMany
+    {
+        return $this->hasMany(Inquiry::class);
+    }
+
     public function scopeActive(Builder $query): void
     {
         $query->where('status', 'active');

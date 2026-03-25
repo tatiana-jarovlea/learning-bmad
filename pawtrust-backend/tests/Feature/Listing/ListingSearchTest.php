@@ -210,4 +210,39 @@ class ListingSearchTest extends TestCase
             ->assertOk()
             ->assertJsonCount(0, 'data');
     }
+
+    public function test_verified_only_filter_excludes_unverified_breeders(): void
+    {
+        $verifiedBreeder = User::factory()->create(['role' => 'breeder']);
+        $verified = BreederProfile::factory()->create([
+            'user_id'     => $verifiedBreeder->id,
+            'verified_at' => now(),
+        ]);
+
+        Listing::factory()->create(['breeder_profile_id' => $verified->id, 'status' => 'active']);
+        Listing::factory()->create(['breeder_profile_id' => $this->profile->id, 'status' => 'active']);
+
+        $this->getJson('/api/v1/listings?verified_only=1')
+            ->assertStatus(200)
+            ->assertJsonCount(1, 'data');
+    }
+
+    public function test_verified_only_filter_returns_only_verified_breeders(): void
+    {
+        $verifiedBreeder = User::factory()->create(['role' => 'breeder']);
+        $verified = BreederProfile::factory()->create([
+            'user_id'     => $verifiedBreeder->id,
+            'verified_at' => now(),
+        ]);
+
+        Listing::factory()->create(['breeder_profile_id' => $verified->id, 'status' => 'active']);
+        Listing::factory()->create(['breeder_profile_id' => $this->profile->id, 'status' => 'active']);
+
+        $response = $this->getJson('/api/v1/listings?verified_only=1')
+            ->assertStatus(200)
+            ->assertJsonCount(1, 'data');
+
+        // ListingCardResource returns verified as a top-level field
+        $this->assertTrue($response->json('data.0.verified'));
+    }
 }

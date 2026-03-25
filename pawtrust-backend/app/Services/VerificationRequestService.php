@@ -8,6 +8,11 @@ use App\Models\VerificationRequest;
 
 class VerificationRequestService
 {
+    public function __construct(
+        private readonly VerificationNotificationService $notificationService
+    ) {
+    }
+
     public function submit(User $user, array $documentIds): VerificationRequest
     {
         $profile = $user->breederProfile;
@@ -28,6 +33,9 @@ class VerificationRequestService
         ]);
 
         $request->documents()->sync($documentIds);
+
+        // Notification is outside the DB write — failure to notify should not roll back the request
+        $this->notificationService->notifyAdminNewRequest($request);
 
         return $request;
     }

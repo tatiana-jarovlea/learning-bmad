@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { getPublicBreederProfile } from '@/api/breeders.api'
+import { VerifiedBadge } from '@/components/shared/VerifiedBadge'
 
 function ProfileSkeleton() {
   return (
@@ -75,15 +76,7 @@ export default function BreederProfilePage() {
               <h1 className="text-2xl font-bold text-gray-900">
                 {data.kennel_name ?? t('breeder.profile.unnamed', 'Unnamed Kennel')}
               </h1>
-              {data.verified ? (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                  ✓ {t('breeder.profile.verified', 'Verified by PawTrust')}
-                </span>
-              ) : (
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500">
-                  {t('breeder.profile.not_verified', 'Not yet verified')}
-                </span>
-              )}
+              <VerifiedBadge verified={data.verified} size="md" />
             </div>
 
             {data.location && <p className="text-gray-500 text-sm mt-1">📍 {data.location}</p>}

@@ -87,6 +87,28 @@
       "verification_queue": "Coada de verificare",
       "users": "Utilizatori",
       "listings": "Anunțuri"
+    },
+    "verification": {
+      "title": "Coada de verificare",
+      "filter_all": "Toate",
+      "filter_pending": "În așteptare",
+      "filter_under_review": "În revizuire",
+      "filter_approved": "Aprobate",
+      "filter_rejected": "Respinse",
+      "col_breeder": "Crescător",
+      "col_kennel": "Crescătorie",
+      "col_submitted": "Data trimiterii",
+      "col_documents": "Documente",
+      "col_status": "Status",
+      "btn_review": "Revizuiește",
+      "btn_preview": "Previzualizează",
+      "modal_title": "Decizie verificare",
+      "status_under_review": "Pus în revizuire",
+      "status_approve": "Aprobă",
+      "status_reject": "Respinge",
+      "notes_label": "Note pentru crescător (minim 20 caractere):",
+      "btn_save": "Salvează decizia",
+      "toast_success": "Decizia a fost salvată."
     }
   },
   "sitter": {
@@ -98,6 +120,13 @@
       "my_profile": "Profilul meu",
       "publish_listing": "Publică anunț"
     }
+  },
+  "badge": {
+    "verified_label": "Verificat",
+    "unverified_label": "Neverificat",
+    "verified_tooltip": "Acest crescător a fost verificat de PawTrust",
+    "unverified_tooltip": "Acest crescător nu a fost încă verificat",
+    "verified_only_toggle": "Doar crescători verificați"
   },
   "search": {
     "title": "Caută animale",
@@ -169,5 +198,20 @@
     "modal_no_docs": "Nu ai niciun document încărcat. Încarcă documente mai întâi.",
     "modal_submit": "Trimite",
     "admin_notes_label": "Notele administratorului:"
+  },
+  "inquiry": {
+    "btn_contact_breeder": "Contactează crescătorul",
+    "btn_login_to_contact": "Autentifică-te pentru a contacta",
+    "modal_title": "Trimite o solicitare",
+    "message_label": "Mesaj opțional (max 500 caractere)",
+    "message_placeholder": "Prezintă-te crescătorului…",
+    "btn_send": "Trimite solicitarea",
+    "sending": "Se trimite…",
+    "chars_remaining": "caractere rămase",
+    "already_inquired": "Ai trimis deja o solicitare pentru acest anunț.",
+    "contact_reveal_title": "Datele de contact ale crescătorului",
+    "contact_email": "Email",
+    "contact_phone": "Telefon",
+    "contact_name": "Nume"
   }
 }
