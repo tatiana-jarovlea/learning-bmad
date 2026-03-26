@@ -92,7 +92,8 @@ describe('VerificationQueue', () => {
 
     await waitFor(() => screen.getByText('Ion Popescu'))
 
-    const reviewBtn = screen.getByText(/Review/)
+    // Use the row action button (not the "Under Review" tab filter)
+    const reviewBtn = screen.getByRole('button', { name: /^Review/ })
     fireEvent.click(reviewBtn)
 
     await waitFor(() => {
@@ -110,7 +111,7 @@ describe('VerificationQueue', () => {
 
     await waitFor(() => screen.getByText('Ion Popescu'))
 
-    fireEvent.click(screen.getByText(/Review/))
+    fireEvent.click(screen.getByRole('button', { name: /^Review/ }))
     await waitFor(() => screen.getByRole('dialog'))
 
     // Select "Approve" radio

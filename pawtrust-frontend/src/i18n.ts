@@ -8,15 +8,15 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: 'ro',
-    supportedLngs: ['ro', 'ru'],
+    fallbackLng: 'en',
+    supportedLngs: ['en', 'ro', 'ru'],
     ns: ['translation'],
     defaultNS: 'translation',
     backend: {
       loadPath: '/locales/{{lng}}/{{ns}}.json',
     },
     detection: {
-      order: ['localStorage', 'navigator'],
+      order: ['localStorage'],
       caches: ['localStorage'],
       lookupLocalStorage: 'pawtrust_lang',
     },
